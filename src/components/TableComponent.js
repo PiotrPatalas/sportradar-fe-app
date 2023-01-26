@@ -7,13 +7,95 @@ function TableComponent() {
 
   const columns = [
     {
-      name: 'Home Team',
-      selector: row => row.sport_event.competitors[0].name + " - " + row.sport_event.competitors[1].name,
+      name: "Home Team",
+      selector: (row) => row.sport_event.competitors[0].name,
+      sortable: true,
+      conditionalCellStyles: [
+        {
+          when: (row) =>
+            row.sport_event_status.winner_id ===
+            row.sport_event.competitors[0].id,
+          style: {
+            backgroundColor: "rgba(63, 195, 128, 0.9)",
+            color: "white",
+          },
+        },
+        {
+          when: (row) =>
+            row.sport_event_status.winner_id !=
+            row.sport_event.competitors[0].id,
+          style: {
+            backgroundColor: "rgba(255, 99, 132, 0.9)",
+            color: "white",
+          },
+        },
+        {
+          when: (row) =>
+            row.sport_event_status.match_tie === true,
+          style: {
+            backgroundColor: "rgba(255, 206, 86, 0.9)",
+            color: "white",
+          },
+        },
+      ],
+    },
+    {
+      name: "Away Team",
+      selector: (row) => row.sport_event.competitors[1].name,
+      sortable: true,
+      conditionalCellStyles: [
+        {
+          when: (row) =>
+            row.sport_event_status.winner_id ===
+            row.sport_event.competitors[1].id,
+          style: {
+            backgroundColor: "rgba(63, 195, 128, 0.9)",
+            color: "white",
+          },
+        },
+        {
+          when: (row) =>
+            row.sport_event_status.winner_id !=
+            row.sport_event.competitors[1].id,
+          style: {
+            backgroundColor: "rgba(255, 99, 132, 0.9)",
+            color: "white",
+          },
+        },
+        {
+          when: (row) =>
+            row.sport_event_status.match_tie === true,
+          style: {
+            backgroundColor: "rgba(255, 206, 86, 0.9)",
+            color: "white",
+          },
+        },
+      ],
+    },
+    {
+      name: "Score",
+      selector: (row) =>
+        row.sport_event_status.home_score +
+        " : " +
+        row.sport_event_status.away_score,
       sortable: true,
     },
     {
-      name: 'Away Team',
-      selector: row => row.sport_event_status.home_score + " : " + row.sport_event_status.away_score,
+      name: "Date",
+      selector: (row) => row.sport_event.start_time,
+      sortable: true,
+    },
+    {
+      name: "Half time score",
+      selector: (row) =>
+        row.sport_event_status.period_scores[0].home_score +
+        " : " +
+        row.sport_event_status.period_scores[0].away_score,
+      sortable: true,
+    },
+    {
+      name: "Stadium name",
+      selector: (row) => row.sport_event.venue.name,
       sortable: true,
     },
   ];
